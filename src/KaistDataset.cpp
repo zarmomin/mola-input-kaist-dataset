@@ -26,7 +26,7 @@
 #include <yaml-cpp/yaml.h>
 
 using namespace mola;
-using namespace mola::euroc_dataset;
+using namespace mola::kaist_dataset;
 
 MRPT_INITIALIZER(do_register){MOLA_REGISTER_MODULE(KaistDataset)}
 
