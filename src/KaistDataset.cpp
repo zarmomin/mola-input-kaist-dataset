@@ -19,7 +19,7 @@
 #include <mola-kernel/yaml_helpers.h>
 #include <mola-sensor-kaist-dataset/KaistDataset.h>
 #include <mrpt/core/initializer.h>
-#include <mrpt/math/CMatrixTemplateNumeric.h>
+//#include <mrpt/math/CMatrixTemplateNumeric.h>
 #include <mrpt/obs/CObservationIMU.h>
 #include <mrpt/obs/CObservationImage.h>
 #include <mrpt/system/filesystem.h>  //ASSERT_DIRECTORY_EXISTS_()
