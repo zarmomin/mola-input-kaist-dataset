@@ -17,7 +17,7 @@
 
 #include <mola-kernel/variant_helper.h>
 #include <mola-kernel/yaml_helpers.h>
-#include <mola-sensor-kaist-dataset/KaistDataset.h>
+#include <mola-input-kaist-dataset/KaistDataset.h>
 #include <mrpt/core/initializer.h>
 #include <mrpt/io/vector_loadsave.h>
 //#include <mrpt/math/CMatrixTemplateNumeric.h>
