@@ -458,12 +458,6 @@ void KaistDataset::build_dataset_entry_obs(SensorVelodyne& s)
         ptr_o->pointcloud, mrpt::format(
                                "Error loading scan file: '%s'",
                                ptr_o->getExternalStorageFile().c_str()));
-
-    // Change pointcloud reference system to be the vehicle frame of reference,
-    // so we don't have to rotate the pointclud more than once in the entire set
-    // of modules:
-    ptr_o->pointcloud->changeCoordinatesReference(ptr_o->sensorPose);
-    ptr_o->sensorPose = mrpt::poses::CPose3D::Identity();
 }
 
 void KaistDataset::build_dataset_entry_obs(SensorOdometry& s)
