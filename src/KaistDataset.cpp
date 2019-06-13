@@ -34,7 +34,7 @@
 using namespace mola;
 using namespace mola::kaist_dataset;
 
-MRPT_INITIALIZER(do_register){MOLA_REGISTER_MODULE(KaistDataset)}
+MRPT_INITIALIZER(do_register_KaistDataset){MOLA_REGISTER_MODULE(KaistDataset)}
 
 KaistDataset::KaistDataset() = default;
 
