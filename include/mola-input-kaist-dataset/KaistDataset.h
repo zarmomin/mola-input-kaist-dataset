@@ -28,31 +28,34 @@ namespace mola::kaist_dataset
 /** Loads a pose from a TXT in KAIST format. Throws on error. */
 mrpt::math::TPose3D load_pose_from_kaist_txt(const std::string& filename);
 
-struct SensorCamera
-{
-    std::string                  sensor_name;
-    std::string                  img_file_name;
-    uint8_t                      cam_idx;
-    mrpt::obs::CObservation::Ptr obs;
-};
-struct SensorIMU
-{
-    std::string                  sensor_name;
-    double                       wx, wy, wz, accx, accy, accz;
-    mrpt::obs::CObservation::Ptr obs;
-};
-struct SensorVelodyne
+struct SensorGeneric
 {
     std::string                  sensor_name;
     mrpt::obs::CObservation::Ptr obs;
 };
-struct SensorSICK
+
+struct SensorCamera : public SensorGeneric
 {
-    std::string                  sensor_name;
-    mrpt::obs::CObservation::Ptr obs;
+    std::string img_file_name;
+    uint8_t     cam_idx;
 };
+struct SensorIMU : public SensorGeneric
+{
+    double wx, wy, wz, accx, accy, accz;
+};
+struct SensorVelodyne : public SensorGeneric
+{
+};
+struct SensorSICK : public SensorGeneric
+{
+};
+struct SensorOdometry : public SensorGeneric
+{
+};
+
 using SensorEntry = std::variant<
-    std::monostate, SensorCamera, SensorIMU, SensorVelodyne, SensorSICK>;
+    std::monostate, SensorCamera, SensorIMU, SensorVelodyne, SensorSICK,
+    SensorOdometry>;
 using kaist_timestamp_t = uint64_t;
 using kaist_dataset_t   = std::multimap<kaist_timestamp_t, SensorEntry>;
 
@@ -72,6 +75,9 @@ class KaistDataset : public RawDataSourceBase
     void initialize(const std::string& cfg_block) override;
     void spinOnce() override;
 
+    /** KAIST timestamp is Unix time * 1e9 */
+    constexpr static double KAIST2UNIXTIME_FACTOR = 1e-9;
+
    private:
     std::string             base_dir_;  //!< base dir for `xxx/xx/mav0/...`
     std::string             sequence_;  //!< e.g. `machine_hall/MH_01_easy`
@@ -80,15 +86,52 @@ class KaistDataset : public RawDataSourceBase
     double                  time_warp_scale_{1.0};
     bool                    publish_VLP_left{true}, publish_VLP_right{true};
     bool                    publish_SICK_back{true}, publish_SICK_middle{true};
+    bool                    publish_odometry{true};
+
+    enum VLP_indices_t : uint8_t
+    {
+        IDX_VLP_LEFT = 0,
+        IDX_VLP_RIGHT,
+        // ---
+        VLP_COUNT
+    };
+
+    enum SICK_indices_t : uint8_t
+    {
+        IDX_SICK_BACK = 0,
+        IDX_SICK_MIDDLE,
+        // ---
+        SICK_COUNT
+    };
 
     // All poses are wrt vehicle frame of reference
     // (refer to figures in KAIST paper)
-    mrpt::math::TPose3D pose_VLP_left_, pose_VLP_right_;
+    struct Calibration
+    {
+        // Velodynes:
+        std::array<mrpt::math::TPose3D, 2> pose_VLP;
+
+        // Odometry:
+        int    odom_encoder_res{4096};  //!< resolution
+        double odom_left_diameter{0.623}, odom_right_diameter{0.622};
+        double odom_wheel_base{1.5285};
+    };
+
+    /** Dataset calibration parameters */
+    Calibration calib_;
+
+    void load_encoder_calib_file(const std::string& filename);
 
     std::string seq_dir_;  //!< selected "sensor_data" directory
 
     kaist_dataset_t           dataset_;  //!< dataset itself
     kaist_dataset_t::iterator dataset_next_;  //!< next item to publish
+
+    void build_dataset_entry_obs(SensorCamera& s);
+    void build_dataset_entry_obs(SensorIMU& s);
+    void build_dataset_entry_obs(SensorSICK& s);
+    void build_dataset_entry_obs(SensorVelodyne& s);
+    void build_dataset_entry_obs(SensorOdometry& s);
 };
 
 /** @} */

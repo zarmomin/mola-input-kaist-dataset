@@ -18,6 +18,7 @@ find_package(mola-common REQUIRED)
 
 # find dependencies:
 find_package(mrpt-obs REQUIRED)
+find_package(mrpt-maps REQUIRED)  # for CObservationPointCloud
 find_package(mrpt-math REQUIRED)  # for MRPT Eigen utilities
 
 # -----------------------
@@ -32,4 +33,5 @@ mola_add_library(
 		mola-kernel
 		mrpt::obs
 		mrpt::math
+		mrpt::maps
 )
