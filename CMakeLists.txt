@@ -17,6 +17,8 @@ project(mola-input-kaist-dataset LANGUAGES CXX)
 find_package(mola-common REQUIRED)
 
 # find dependencies:
+find_mola_package(mola-kernel)
+
 find_package(mrpt-obs REQUIRED)
 find_package(mrpt-maps REQUIRED)  # for CObservationPointCloud
 find_package(mrpt-math REQUIRED)  # for MRPT Eigen utilities
