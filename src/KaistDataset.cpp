@@ -78,8 +78,14 @@ void KaistDataset::initialize(const std::string& cfg_block)
     auto&      pose_vlp_r  = calib_.pose_VLP[IDX_VLP_RIGHT];  // shortcut
     pose_vlp_r             = load_pose_from_kaist_txt(calib_vlp_r);
 
-    MRPT_LOG_DEBUG_STREAM("Left VLP pose: " << pose_vlp_l.asString());
-    MRPT_LOG_DEBUG_STREAM("Right VLP pose: " << pose_vlp_r.asString());
+	MRPT_LOG_DEBUG_STREAM(
+	    "Left VLP pose: "
+	    << pose_vlp_l.asString() << " = "
+	    << pose_vlp_l.getHomogeneousMatrix().inMatlabFormat());
+	MRPT_LOG_DEBUG_STREAM(
+	    "Right VLP pose: "
+	    << pose_vlp_r.asString() << " = "
+	    << pose_vlp_r.getHomogeneousMatrix().inMatlabFormat());
 
     // Wheels odometry calibration:
     const auto calib_odom = calib_dir + "/EncoderParameter.txt"s;
