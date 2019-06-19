@@ -20,7 +20,7 @@
 #include <string>
 #include <variant>
 
-namespace mola::kaist_dataset
+namespace mola
 {
 /** \addtogroup mola_sensor_kaist_dataset_grp
  * @{ */
@@ -67,6 +67,8 @@ using kaist_dataset_t   = std::multimap<kaist_timestamp_t, SensorEntry>;
  */
 class KaistDataset : public RawDataSourceBase
 {
+    DEFINE_MRPT_OBJECT(KaistDataset)
+
    public:
     KaistDataset();
     ~KaistDataset() override = default;
@@ -136,4 +138,4 @@ class KaistDataset : public RawDataSourceBase
 
 /** @} */
 
-}  // namespace mola::kaist_dataset
+}  // namespace mola

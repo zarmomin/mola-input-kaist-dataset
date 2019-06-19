@@ -32,9 +32,14 @@
 #include <mrpt/io/csv.h>
 
 using namespace mola;
-using namespace mola::kaist_dataset;
 
-MRPT_INITIALIZER(do_register_KaistDataset){MOLA_REGISTER_MODULE(KaistDataset)}
+// arguments: class_name, parent_class, class namespace
+IMPLEMENTS_MRPT_OBJECT_NS_PREFIX(KaistDataset, RawDataSourceBase, mola);
+
+MRPT_INITIALIZER(do_register_KaistDataset)
+{
+    MOLA_REGISTER_MODULE(KaistDataset);
+}
 
 KaistDataset::KaistDataset() = default;
 
@@ -78,14 +83,14 @@ void KaistDataset::initialize(const std::string& cfg_block)
     auto&      pose_vlp_r  = calib_.pose_VLP[IDX_VLP_RIGHT];  // shortcut
     pose_vlp_r             = load_pose_from_kaist_txt(calib_vlp_r);
 
-	MRPT_LOG_DEBUG_STREAM(
-	    "Left VLP pose: "
-	    << pose_vlp_l.asString() << " = "
-	    << pose_vlp_l.getHomogeneousMatrix().inMatlabFormat());
-	MRPT_LOG_DEBUG_STREAM(
-	    "Right VLP pose: "
-	    << pose_vlp_r.asString() << " = "
-	    << pose_vlp_r.getHomogeneousMatrix().inMatlabFormat());
+    MRPT_LOG_DEBUG_STREAM(
+        "Left VLP pose: "
+        << pose_vlp_l.asString() << " = "
+        << pose_vlp_l.getHomogeneousMatrix().inMatlabFormat());
+    MRPT_LOG_DEBUG_STREAM(
+        "Right VLP pose: "
+        << pose_vlp_r.asString() << " = "
+        << pose_vlp_r.getHomogeneousMatrix().inMatlabFormat());
 
     // Wheels odometry calibration:
     const auto calib_odom = calib_dir + "/EncoderParameter.txt"s;
@@ -334,8 +339,7 @@ void KaistDataset::spinOnce()
     MRPT_END
 }
 
-mrpt::math::TPose3D mola::kaist_dataset::load_pose_from_kaist_txt(
-    const std::string& filename)
+mrpt::math::TPose3D mola::load_pose_from_kaist_txt(const std::string& filename)
 {
     using namespace std::string_literals;
 
