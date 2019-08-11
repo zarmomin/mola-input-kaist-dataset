@@ -1,8 +1,18 @@
 ========================================
-Module: mola-sensor-kaist-dataset
+Module: mola-input-kaist-dataset
 ========================================
 
-Write me!
+Reads from a `KAIST SLAM dataset`_, including:
+ - Two 3D lidars (Velodyne VLP16)
+ - Two 2D lidars (SICK)
+ - Stereo camera pair.
+ - Wheel odometry.
+ - FOG.
+ - Altimeter.
+
+
+.. _`KAIST SLAM dataset`: http://irap.kaist.ac.kr/dataset/
+
 
 .. index::
    single: mola-sensor-kaist-dataset
