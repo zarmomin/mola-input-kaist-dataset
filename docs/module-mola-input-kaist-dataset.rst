@@ -15,5 +15,5 @@ Reads from a `KAIST SLAM dataset`_, including:
 
 
 .. index::
-   single: mola-sensor-kaist-dataset
-   module: mola-sensor-kaist-dataset
+   single: mola-input-kaist-dataset
+   module: mola-input-kaist-dataset

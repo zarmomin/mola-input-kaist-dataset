@@ -11,7 +11,7 @@
  * @date   May 9, 2019
  */
 
-/** \defgroup mola_sensor_kaist_dataset_grp mola_sensor_kaist_dataset_grp.
+/** \defgroup mola_input_kaist_dataset_grp mola_input_kaist_dataset_grp.
  * RawDataSource from the KAIST urban dataset
  */
 

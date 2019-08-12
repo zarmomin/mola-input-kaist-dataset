@@ -22,7 +22,7 @@
 
 namespace mola
 {
-/** \addtogroup mola_sensor_kaist_dataset_grp
+/** \addtogroup mola_input_kaist_dataset_grp
  * @{ */
 
 /** Loads a pose from a TXT in KAIST format. Throws on error. */
