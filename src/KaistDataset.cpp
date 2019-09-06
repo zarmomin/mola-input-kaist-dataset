@@ -57,11 +57,11 @@ void KaistDataset::initialize(const std::string& cfg_block)
     auto cfg = c["params"];
     MRPT_LOG_DEBUG_STREAM("Initializing with these params:\n" << cfg);
 
-    yamlLoadMemberReq<std::string>(cfg, "base_dir", base_dir);
-    yamlLoadMemberReq<std::string>(cfg, "sequence", sequence);
+    yamlLoadMemberReq<std::string>(cfg, "base_dir", &base_dir);
+    yamlLoadMemberReq<std::string>(cfg, "sequence", &sequence);
 
     // Optional params with default values:
-    yamlLoadMemberOpt<double>(cfg, "time_warp_scale", time_warp_scale);
+    yamlLoadMemberOpt<double>(cfg, "time_warp_scale", &time_warp_scale);
 
     // Preload everything we may need later to quickly replay the dataset in
     // realtime:
